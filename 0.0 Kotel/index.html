@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boiler</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <h1>Boiler management</h1>
+    <div class="container">
+        <div class="logs">
+            <h2>Logs</h2>
+            <p> 09.12.2024 21:04:27 Termostat aktivni <br />
+                09.12.2024 21:04:27 Ventil otevren  <br />
+                09.12.2024 21:06:27 Ventil uzavren  <br />
+                09.12.2024 21:04:27 Provoz 65  <br />
+                09.12.2024 21:11:33 Termostat aktivni  <br />
+                09.12.2024 21:11:33 Ventil otevren  <br />
+                09.12.2024 21:13:33 Ventil uzavren  <br />
+                09.12.2024 21:11:33 Provoz 66  <br />
+                09.12.2024 21:18:40 Termostat neaktivni  <br />
+                09.12.2024 21:18:40 Provoz 66  <br />
+                09.12.2024 21:23:46 Termostat neaktivni  <br />
+                09.12.2024 21:23:46 Útlum od teploty 67  <br />
+                09.12.2024 21:28:52 Termostat neaktivni  <br />
+                09.12.2024 21:28:52 Útlum od teploty 68  <br />
+                09.12.2024 21:29:38 Termostat neaktivni  <br />
+                09.12.2024 21:29:38 Útlum od teploty 68  <br />
+                09.12.2024 21:29:38 Útlum od teploty 68  <br />
+                09.12.2024 21:30:01 Termostat neaktivni  <br />
+                09.12.2024 21:30:01 Útlum od teploty 68  <br />
+                09.12.2024 21:30:01 Útlum od teploty 69  <br />
+                09.12.2024 21:31:41 Termostat neaktivni  <br />
+                09.12.2024 21:31:41 Stav neznamy Teplota neznama
+            </p>
+        </div>
+        <div class="indicators">
+            <div class="countdown">
+                <p>Next refill in 2 day 3 hours </p>
+                <button id="btn-renew">Renew</button>
+            </div>
+            <div class="item"><p>Boiler status: Running</p></div>
+            <div class="item"><p>Boiler temperature: 63 °C</p></div>
+            <div class="item">
+                <p>Check interval: 5 min</p> 
+                <button class="btn-up">▲</button>
+                <button class="btn-down">▼</button>
+            </div>
+            <div class="item"><p>Open interval: 2 min</p></div>
+        </div>
+    </div>
+    
+</body>
+</html>

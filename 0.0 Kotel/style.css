@@ -1,0 +1,66 @@
+body {
+    background-color: #153448;
+}
+
+h1 {
+    color: #DFD0B8;
+}
+
+p {
+    color: #DFD0B8;
+    font-size: 25px;
+    display: inline-block;
+}
+
+.container > * {
+    color: #DFD0B8;;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    height: 90vh;
+    gap: 1rem;
+}
+
+.logs {
+    background-color: #3C5B6F;
+    border-radius: 2%;
+    padding-left: 2rem;
+}
+
+.indicators {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+}
+
+button {
+    background-color: #DFD0B8;
+    cursor: pointer;
+    border: 0;
+    border-radius: 20%;
+}
+
+#btn-renew {
+    background-color: #153448;
+    cursor: pointer;
+    border: 0;
+    border-radius: 20%;
+    font-size: 18px;
+    color: #DFD0B8;
+}
+
+.countdown {
+    background-color: #948979;
+    color: #153448;
+    border-radius: 4%;
+}
+
+.countdown p {
+    background-color: #948979;
+    color: #153448;
+}
