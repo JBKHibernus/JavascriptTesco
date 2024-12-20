@@ -26,7 +26,7 @@ p {
 
 .logs {
     background-color: #3C5B6F;
-    border-radius: 2%;
+    border-radius: 10px;
     padding-left: 2rem;
 }
 
@@ -35,32 +35,57 @@ p {
     justify-content: flex-start;
     flex-direction: column;
     flex-wrap: wrap;
+}
 
+.indicators p{
+    padding-left: 1rem;;
 }
 
 button {
     background-color: #DFD0B8;
     cursor: pointer;
     border: 0;
-    border-radius: 20%;
+    border-radius: 5px;
 }
 
 #btn-renew {
     background-color: #153448;
     cursor: pointer;
-    border: 0;
-    border-radius: 20%;
     font-size: 18px;
     color: #DFD0B8;
 }
 
 .countdown {
     background-color: #948979;
-    color: #153448;
-    border-radius: 4%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 1rem;
 }
 
 .countdown p {
-    background-color: #948979;
     color: #153448;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn-up {
+    display: inline-block;
+    margin-bottom: 1px;
+}
+
+.btn-down {
+    display: inline-block;
+    margin-top: 1px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
