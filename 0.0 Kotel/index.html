@@ -38,27 +38,27 @@
         </div>
         <div class="indicators">
             <div class="countdown">
-                <p>Next refill in <span id="next-refill">2 day 3 hours</span> </p>
+                <p>Next refill in <span>2 day 3 hours</span> </p>
                 <button id="btn-renew">Renew</button>
             </div>
-            <div class="item"><p>Boiler status: Running</p></div>
-            <div class="item"><p>Boiler temperature: <span id="boiler-temp">63</span> °C</p></div>
-            <div class="item">
-                <p>Check interval: <span id="check-interval">5</span> min</p> 
-                <div class="buttons">
+            <div class="item"><p>Boiler status: <span>Running</span></p></div>
+            <div class="item"><p>Boiler temperature: <span>63</span> °C</p></div>
+            <div  id="check-interval" class="item">
+                <p>Check interval: <span>5</span> min</p> 
+                <div class="arrow-buttons">
                     <button class="btn-up">▲</button>
                     <button class="btn-down">▼</button>
                 </div>
             </div>
-            <div class="item">
-                <p>Open interval: <span id="open-interval">2</span> min</p>
-                <div class="buttons">
+            <div id="open-interval" class="item">
+                <p>Open interval: <span>2</span> min</p>
+                <div class="arrow-buttons">
                     <button class="btn-up">▲</button>
                     <button class="btn-down">▼</button>
                 </div>
             </div>
         </div>
     </div>
-    
+    <script src="./index.js" charset="utf-8"></script>
 </body>
 </html>

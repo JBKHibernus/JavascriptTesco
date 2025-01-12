@@ -7,9 +7,9 @@ h1 {
 }
 
 .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
     height: 90vh;
     gap: 1rem;
     color: #DFD0B8;
@@ -24,6 +24,7 @@ ul {
 }
 
 .logs {
+    flex-grow: 1;
     background-color: #3C5B6F;
     border-radius: 10px;
     padding-left: 2rem;
@@ -31,6 +32,7 @@ ul {
 
 .indicators {
     display: flex;
+    flex-grow: 1;
     justify-content: flex-start;
     flex-direction: column;
     flex-wrap: wrap;
@@ -89,4 +91,9 @@ button {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.pressed {
+    box-shadow: 0 3px 4px 0 #DBEDF3;
+    opacity: 0.5;
 }
