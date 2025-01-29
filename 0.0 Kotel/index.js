@@ -1,47 +1,39 @@
 
-
-
-document.querySelectorAll(".btn-up").forEach(function(pressedButton) {
-    pressedButton.addEventListener("click", function() {
-        console.log(this);
-        buttonAnimation(this);
-        raiseValue(this);
+document.querySelectorAll(".btn-up").forEach((pressedButton) => {
+    pressedButton.addEventListener("click", (event) => {
+        const target = event.currentTarget;
+        buttonAnimation(target);
+        changeValue(target);
     });
 });
 
-document.querySelector("#check-interval .btn-down").addEventListener("click", function() {
-    buttonAnimation(this);
-    lowerValue("#check-interval");
+document.querySelectorAll(".btn-down").forEach((pressedButton) => {
+    pressedButton.addEventListener("click", (event) => {
+        const target = event.currentTarget;
+        buttonAnimation(target);
+        changeValue(target);
+    });
 });
 
-document.querySelector("#check-interval .btn-down").addEventListener("click", function() {
-    buttonAnimation(this);
-    lowerValue("#check-interval");
-});
-
-
-document.querySelector("#open-interval .btn-down").addEventListener("click", function() {
-    buttonAnimation(this);
-    lowerValue("#open-interval");
-});
-
-function raiseValue(pressedButton) {
+function changeValue(pressedButton) {
     const container = pressedButton.parentElement.parentElement;
     const valueElement = container.querySelector("p > span")
     const openInterval = valueElement.innerHTML;
     let openIntervalNum = Number(openInterval);
-    if (openIntervalNum < 9) {
-        openIntervalNum += 1;
-        valueElement.innerHTML = openIntervalNum;
-    }
-}
 
-function lowerValue(pressedButton) {
-    openInterval = document.querySelector(pressedButton + " > p > span").innerHTML;
-    openIntervalNum = Number(openInterval);
-    if (openIntervalNum > 1) {
-        openIntervalNum -= 1;
-        document.querySelector(pressedButton + " > p > span").innerHTML = openIntervalNum;
+    const isLower = pressedButton.classList.contains("btn-down");
+
+    if (isLower) {
+        if (openIntervalNum > 1) {
+            openIntervalNum -= 1;
+            valueElement.innerHTML = openIntervalNum;
+        }
+    }
+    else {
+        if (openIntervalNum < 9) {
+            openIntervalNum += 1;
+            valueElement.innerHTML = openIntervalNum;
+        }
     }
 }
 
