@@ -1,9 +1,12 @@
 
 
 
-document.querySelector("#check-interval .btn-up").addEventListener("click", function() {
-    buttonAnimation(this);
-    raiseValue("#check-interval");
+document.querySelectorAll(".btn-up").forEach(function(pressedButton) {
+    pressedButton.addEventListener("click", function() {
+        console.log(this);
+        buttonAnimation(this);
+        raiseValue(this);
+    });
 });
 
 document.querySelector("#check-interval .btn-down").addEventListener("click", function() {
@@ -11,10 +14,11 @@ document.querySelector("#check-interval .btn-down").addEventListener("click", fu
     lowerValue("#check-interval");
 });
 
-document.querySelector("#open-interval .btn-up").addEventListener("click", function() {
+document.querySelector("#check-interval .btn-down").addEventListener("click", function() {
     buttonAnimation(this);
-    raiseValue("#open-interval");
+    lowerValue("#check-interval");
 });
+
 
 document.querySelector("#open-interval .btn-down").addEventListener("click", function() {
     buttonAnimation(this);
@@ -22,11 +26,13 @@ document.querySelector("#open-interval .btn-down").addEventListener("click", fun
 });
 
 function raiseValue(pressedButton) {
-    openInterval = document.querySelector(pressedButton + " > p > span").innerHTML;
-    openIntervalNum = Number(openInterval);
+    const container = pressedButton.parentElement.parentElement;
+    const valueElement = container.querySelector("p > span")
+    const openInterval = valueElement.innerHTML;
+    let openIntervalNum = Number(openInterval);
     if (openIntervalNum < 9) {
         openIntervalNum += 1;
-        document.querySelector(pressedButton + " > p > span").innerHTML = openIntervalNum;
+        valueElement.innerHTML = openIntervalNum;
     }
 }
 
