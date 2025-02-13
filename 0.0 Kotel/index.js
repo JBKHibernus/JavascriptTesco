@@ -1,8 +1,9 @@
+"use strict"
 
 document.querySelectorAll(".btn-up").forEach((pressedButton) => {
     pressedButton.addEventListener("click", (event) => {
         const target = event.currentTarget;
-        buttonAnimation(target);
+        animateButton(target);
         changeValue(target);
     });
 });
@@ -10,7 +11,7 @@ document.querySelectorAll(".btn-up").forEach((pressedButton) => {
 document.querySelectorAll(".btn-down").forEach((pressedButton) => {
     pressedButton.addEventListener("click", (event) => {
         const target = event.currentTarget;
-        buttonAnimation(target);
+        animateButton(target);
         changeValue(target);
     });
 });
@@ -18,29 +19,28 @@ document.querySelectorAll(".btn-down").forEach((pressedButton) => {
 function changeValue(pressedButton) {
     const container = pressedButton.parentElement.parentElement;
     const valueElement = container.querySelector("p > span")
-    const openInterval = valueElement.innerHTML;
-    let openIntervalNum = Number(openInterval);
+    let currentValue = Number(valueElement.innerHTML);
 
     const isLower = pressedButton.classList.contains("btn-down");
+    const changeBy = isLower ? -1 : +1;
 
-    if (isLower) {
-        if (openIntervalNum > 1) {
-            openIntervalNum -= 1;
-            valueElement.innerHTML = openIntervalNum;
-        }
-    }
-    else {
-        if (openIntervalNum < 9) {
-            openIntervalNum += 1;
-            valueElement.innerHTML = openIntervalNum;
-        }
-    }
+    valueElement.innerHTML = getUpdatedValue(currentValue, changeBy);
 }
 
-function buttonAnimation(pressedButton) {
+function getUpdatedValue(currentValue, changeBy) {
+    let updatedValue = currentValue + changeBy;
+    
+    updatedValue = Math.min(9, updatedValue);
+    updatedValue = Math.max(1, updatedValue);
+
+    return updatedValue;
+}
+
+function animateButton(pressedButton) {
     pressedButton.classList.add("pressed");
 
     setTimeout(function() {
         pressedButton.classList.remove("pressed");
     }, 100, );
 }
+
