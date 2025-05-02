@@ -1,5 +1,7 @@
 "use strict"
 
+
+//ARROW BUTTONS
 document.querySelectorAll(".btn-up").forEach((pressedButton) => {
     pressedButton.addEventListener("click", (event) => {
         const target = event.currentTarget;
@@ -18,7 +20,7 @@ document.querySelectorAll(".btn-down").forEach((pressedButton) => {
 
 function changeValue(pressedButton) {
     const container = pressedButton.parentElement.parentElement;
-    const valueElement = container.querySelector("p > span")
+    const valueElement = container.querySelector("span.editable-amount")
     let currentValue = Number(valueElement.innerHTML);
 
     const isLower = pressedButton.classList.contains("btn-down");
@@ -44,8 +46,101 @@ function animateButton(pressedButton) {
     }, 100, );
 }
 
+//FEEDING STATS
+document.querySelector("#btn-renew").addEventListener("click", (event) => {
+  renewCountdown();
+});
+
+//write actual date and amount of bags to DB
+const renewCountdown = function() {
+  const amountElement = document.querySelector("span.editable-amount");
+  const amount = Number(amountElement.textContent);
+
+  fetch('/feed', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ amount })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Error duriing writting.");
+    }
+    return response.json();
+  })
+  .then(data => {
+    //renew countdown
+    console.log("Record added succesfully");
+    logLastFeed();
+  })
+  .catch(error => {
+    alert("Error: " + error.message);
+  });
+};
+
+//read from db last feed time and amount
+function logLastFeed() {
+  let lastFeed = '';
+  let lastAmount = '';
+  fetch('/last-feed')
+    .then(response => {
+      if (!response.ok) throw new Error("Error durrig reading last record");
+      return response.json();
+    })
+    .then(data => {
+      console.log("Last record:", data);
+      lastFeed = data.feeded_at;
+      lastAmount = data.amount;
+      setCountdownValue(lastFeed);
+      //console.log('last',lastFeed);
+    })
+    .catch(err => {
+      console.error("Error:", err.message);
+    });
+};
+
+logLastFeed()
+
+//set new value to countdown
+const setCountdownValue = function(lastFeed) {
+  const now = new Date();
+  console.log('actual time', now);
+  console.log('last feed', lastFeed);
+
+  const newCountdownValue = getTimeDifference(lastFeed)
+  const oldCountdownValue = document.querySelector('#countdown-value').textContent;
+  console.log(newCountdownValue);
+  console.log(oldCountdownValue);
+
+  document.querySelector('#countdown-value').textContent = newCountdownValue;
+};
+
+function getTimeDifference(datetimeStr) {
+  // Převeď řetězec z DB na Date objekt
+  const targetDate = new Date(datetimeStr.replace(' ', 'T'));
+  const now = new Date();
+
+  let diffMs = now - targetDate; // rozdíl v milisekundách
+
+  // Pokud je v minulosti, vrať nulu
+  if (diffMs < 0) diffMs = 0;
+
+  const diffMinutes = Math.floor(diffMs / (1000 * 60));
+  const days = Math.floor(diffMinutes / (60 * 24));
+  const hours = Math.floor((diffMinutes % (60 * 24)) / 60);
+  const minutes = diffMinutes % 60;
+
+  return `${days} day${days !== 1 ? 's' : ''} ${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''}`;
+}
 
 
+
+
+
+
+
+//GLOBAL LOGS
 function deleteRows() {
   const li = document.querySelectorAll('.logs li');
     li.forEach((liItem) => {
@@ -88,10 +183,10 @@ function getLogs() {
 };
 
 
-setInterval(() => {
-  deleteRows();
-  getLogs();
-}, 6000);
+// setInterval(() => {
+//   deleteRows();
+//   getLogs();
+// }, 6000);
 
 
 

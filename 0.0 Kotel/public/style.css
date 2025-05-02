@@ -57,6 +57,12 @@ p {
     color: #153448;
 }
 
+.feeding-amount {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 button {
     background-color: #DFD0B8;
     cursor: pointer;
