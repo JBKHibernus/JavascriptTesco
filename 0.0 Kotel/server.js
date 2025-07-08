@@ -10,6 +10,8 @@ const port = 3000;
 app.use(express.static('public')); // složka s HTML a JS --logy bych mel umistit
 app.use(express.json());
 
+const db = new sqlite3.Database('./boiler_database.db');
+
 //GET TXT LOGS
 app.get('/logs', (req, res) => {
     //res.send('server called');
@@ -24,7 +26,6 @@ app.get('/logs', (req, res) => {
 // INSERT FEED TIME INTO DB
 app.post('/feed', (req, res) => {
   const amount = req.body.amount ?? 1; // výchozí množství
-  const db = new sqlite3.Database('./boiler_database.db');
 
   db.run("INSERT INTO feeding_log (amount, feeded_at) VALUES (?, datetime('now', 'localtime'))", [amount], function(err) {
     if (err) {
@@ -36,12 +37,10 @@ app.post('/feed', (req, res) => {
     res.send({ success: true });
   });
 
-  db.close();
 });
 
 //READ LAST FEED TIME
 app.get('/feed/last', (req, res) => {
-  const db = new sqlite3.Database('./boiler_database.db');
 
   db.get("SELECT * FROM feeding_log ORDER BY id DESC LIMIT 1", [], (err, row) => {
     if (err) {
@@ -52,7 +51,6 @@ app.get('/feed/last', (req, res) => {
     res.json(row); 
   });
 
-  db.close();
 });
 
 
@@ -75,14 +73,12 @@ app.get('/feed/last', (req, res) => {
 
 
 app.get('/feed/avg', (req, res) => {
-  const db = new sqlite3.Database('./boiler_database.db');
 
   db.all("SELECT substr(feeded_at,1,10) as feeded_at, SUM(amount) as amount FROM feeding_log GROUP BY substr(feeded_at,1,10)", [], (err, data) => {
     if (err) {
       console.error(err.message);
       return res.status(500).send("Error during reading DB");
     }
-    //console.log(data);
     
     data.forEach((datum, i) => {
       if(i > 0) {
@@ -93,7 +89,6 @@ app.get('/feed/avg', (req, res) => {
         datum.avg_daily_consum = avgDailyConsum;
       }
     });
-    //console.log(data);
 
     const calculatedDays = data.filter(item => item.avg_daily_consum !== undefined);
     const avgOverAll = calculatedDays.reduce((sum, acc) => {
@@ -103,13 +98,8 @@ app.get('/feed/avg', (req, res) => {
     }, 0) / calculatedDays.length;
     console.log(avgOverAll);
 
-    //res.json(data); 
-
     res.json(avgOverAll);
-    
   });
-
-  db.close();
 
 });
 
@@ -122,7 +112,7 @@ app.get('/feed/avg', (req, res) => {
 //       console.error(err.message);
 //       return res.status(500).send("Error during reading DB");
 //     }
-//     //console.log(data);
+//     console.log(data);
     
 //     data.forEach((datum, i) => {
 //       if(i > 0) {
@@ -133,7 +123,7 @@ app.get('/feed/avg', (req, res) => {
 //         datum.avg_daily_consum = avgDailyConsum;
 //       }
 //     });
-//     //console.log(data);
+//     console.log(data);
 
 //     const calculatedDays = data.filter(item => item.avg_daily_consum !== undefined);
 //     const avgOverAll = calculatedDays.reduce((sum, acc) => {
@@ -141,7 +131,7 @@ app.get('/feed/avg', (req, res) => {
 //         return sum + acc.avg_daily_consum;
 //       };
 //     }, 0) / calculatedDays.length;
-//     console.log(avgOverAll);
+//     //console.log(avgOverAll);
 
 //     //res.json(data); 
 
@@ -162,3 +152,5 @@ app.get('/feed/avg', (req, res) => {
 app.listen(port, () => {
   console.log(`Server běží na http://localhost:${port}`);
 });
+
+process.on('exit', () => {db.close()});

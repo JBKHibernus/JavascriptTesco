@@ -87,7 +87,6 @@ getAllFeedsTimeAmount();
 //READ FROm DB LAST FEED AND TIME
 let lastFeed = '';                                  //
 function logLastFeed() {
-  //let lastFeed = '';                              //
   let lastAmount = '';
   fetch('/feed/last', {method: 'GET'})
     .then(response => {

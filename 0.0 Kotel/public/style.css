@@ -57,6 +57,10 @@ p {
     color: #153448;
 }
 
+.refilling-container {
+    width: 530px;
+}
+
 .feeding-amount {
     display: flex;
     align-items: center;
