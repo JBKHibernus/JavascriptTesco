@@ -1,22 +1,25 @@
 "use strict"
 
-const btnUp = document.querySelectorAll(".btn-up");
-const btnDown = document.querySelectorAll(".btn-down");
 const btnRenew = document.querySelector("#btn-renew");
 const amountElement = document.querySelector("span.editable-amount");
 const countdownValue = document.querySelector('#countdown-value');
 const averageAmount = document.querySelector('#avg-amount > p > span');
+const countdownButtonsUp = document.querySelectorAll(".countdown .btn-up");
+const countdownButtonsDown = document.querySelectorAll(".countdown .btn-down");
+const settingsButtonsUp = document.querySelectorAll(".settings .btn-up");
+const settingsButtonsDown = document.querySelectorAll(".settings .btn-down");
+
 
 
 class ArrowActions {
   target;
 
-  constructor() {
-    btnUp.forEach((pressedButton) => {
+  constructor(buttonUp, buttonDown) {
+    buttonUp.forEach((pressedButton) => {
       this.pressed(pressedButton);
     });
 
-    btnDown.forEach((pressedButton) => {
+    buttonDown.forEach((pressedButton) => {
       this.pressed(pressedButton);
     });
     
@@ -59,16 +62,18 @@ class ArrowActions {
   }
 }
 
-//FEEDING STATS
-class Renew {
+
+class Countdown {
   lastFeed; 
 
   constructor() {
+    const amountInput = new ArrowActions(countdownButtonsUp, countdownButtonsDown);
+
     btnRenew.addEventListener("click", (event) => {
-      this.renewCountdown();
+      this.saveAmount();
     });
 
-    this.logLastFeed();
+    this.loadLastFeed();
 
     setInterval(() => this.setCountdownValue(this.lastFeed), 1000); 
   }
@@ -102,7 +107,7 @@ class Renew {
   };
 
   //READ FROM DB LAST FEED AND TIME
-  logLastFeed() {
+  loadLastFeed() {
     let lastAmount = '';
     fetch('/feed/last', {method: 'GET'})
       .then(response => {
@@ -120,7 +125,7 @@ class Renew {
   };
 
   //write actual date and amount of bags to DB
-  renewCountdown() {
+  saveAmount() {
     const amount = Number(amountElement.textContent);
 
     fetch('/feed', {
@@ -139,7 +144,7 @@ class Renew {
     .then(data => {
       //renew countdown
       console.log("Record added succesfully");
-      this.logLastFeed();
+      this.loadLastFeed();
     })
     .catch(error => {
       alert("Error: " + error.message);
@@ -147,13 +152,14 @@ class Renew {
   };
 }
 
-class Average{
+class Setting{
   constructor() {
-    this.getAllFeedsTimeAmount();
+    const intervalInput = new ArrowActions(settingsButtonsUp, settingsButtonsDown);
+
+    this.setAverage();
   }
 
-  getAllFeedsTimeAmount() {
-
+  setAverage() {
     fetch('/feed/avg', {method: 'GET'})
       .then(response => {
         if (!response.ok) throw new Error("Error durrig reading last record");
@@ -167,6 +173,10 @@ class Average{
         console.error("Error:", err.message);
       });
   }
+
+  loadStatus() {}
+  setCheckInterval() {}
+  setOpenInterval() {}
 }
 
 
@@ -174,9 +184,8 @@ class Average{
 
 class App {
   constructor() {
-    const arrows = new ArrowActions();
-    const renew = new Renew();
-    const average = new Average();
+    const renew = new Countdown();
+    const average = new Setting();
   }
 }
 
