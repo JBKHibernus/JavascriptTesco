@@ -93,13 +93,20 @@ class Model {
 
     data.forEach(param => {
       if (param.id === 'check_interval') {
-        this.state['checkInterval'] = param.value;
+        this.state['checkInterval'] = param.value; //switch
       }
       if (param.id === 'open_interval') {
         this.state['openInterval'] = param.value;
       }
     });
   };
+
+  updateBoilerParamsState(checkIntervalValue, openIntervalValue) {
+    this.state.checkInterval = +checkIntervalValue.textContent;
+    this.state.openInterval = +openIntervalValue.textContent;
+
+    console.log(this.state);
+  }
 
   //write actual date and amount of bags to DB
   saveBoilerParams = async (id, value) => {

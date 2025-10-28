@@ -24,21 +24,8 @@ class App {
 
     setInterval(() => this.setCountdownValue(model.state.lastFeed), 1000);
 
-    view.addHandler(this.updateAmount);
+    view.addRenewButtonHandler(this.updateAmount);
 
-    // this.updateBoilerStatusLog()
-    //   .then(status => {
-    //     console.log(status);
-    //   })
-    //   .catch(err => console.error(err));
-
-    //   model
-    //     .loadBoilerStatusLogs()
-    //     .then(() => {
-    //       console.log(model.state.statusLog);
-    //     })
-    //     .catch(err => console.error(err));
-    //
     this.updateBoilerStatusLog();
     setInterval(() => this.updateBoilerStatusLog(), 60000);
 
@@ -49,7 +36,21 @@ class App {
       );
     });
 
-    model.saveBoilerParams('check_interval', 7); //jen test, ale zapisuje, dodelej volani pri stisku tlacitka
+    view.arrowActions.pressedUp(() =>
+      model.updateBoilerParamsState(
+        view.checkIntervalValue,
+        view.openIntervalValue
+      )
+    );
+
+    view.arrowActions.pressedDown(() =>
+      model.updateBoilerParamsState(
+        view.checkIntervalValue,
+        view.openIntervalValue
+      )
+    );
+
+    //model.saveBoilerParams('check_interval', 7); //jen test, ale zapisuje, dodelej volani pri stisku tlacitka
   }
 
   //set new value to countdown
@@ -96,6 +97,10 @@ class App {
       })
       .catch(err => console.error(err));
   };
+
+  writeBoilerParams(id, value) {
+    model.saveBoilerParams('check_interval', 7);
+  }
 }
 
 const app = new App();

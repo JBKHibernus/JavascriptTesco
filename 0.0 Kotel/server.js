@@ -144,8 +144,17 @@ app.get('/params/read', (req, res) => {
 
 // UPDATE BOLIER_PARAMETERS IN DB
 app.post('/params/write', (req, res) => {
-  const value = req.body.value ?? 5; // výchozí množství
   const id = req.body.id;
+  const value = req.body.value;
+  const exisitngIDs = ['open_interval', 'check_interval'];
+
+  if (!exisitngIDs.includes(id)) {
+    return res.status(400).send('Invalid ID');
+  }
+
+  if (!Number.isInteger(Number(value)) || value === 0) {
+    return res.status(400).send('Invalid value: must be an integer.');
+  }
 
   db.run(
     'UPDATE boiler_parameters SET value = ? WHERE id = ?',
