@@ -36,21 +36,14 @@ class App {
       );
     });
 
-    view.arrowActions.pressedUp(() =>
-      model.updateBoilerParamsState(
-        view.checkIntervalValue,
-        view.openIntervalValue
-      )
-    );
-
-    view.arrowActions.pressedDown(() =>
-      model.updateBoilerParamsState(
-        view.checkIntervalValue,
-        view.openIntervalValue
-      )
-    );
-
-    //model.saveBoilerParams('check_interval', 7); //jen test, ale zapisuje, dodelej volani pri stisku tlacitka
+    view.arrowActions.setHandlers((key, value = 1) => {
+      // model.setBoilerParam('openInterval', +view.openIntervalValue.textContent);
+      // model.setBoilerParam(
+      //   'checkInterval',
+      //   +view.checkIntervalValue.textContent
+      // );
+      model.setBoilerParam(key, value);
+    });
   }
 
   //set new value to countdown
@@ -91,16 +84,14 @@ class App {
       .then(() => {
         if (!model.state.statusLog) return;
 
-        console.log(model.state.statusLog);
-
         view.renderStatusLog(model.state.statusLog);
       })
       .catch(err => console.error(err));
   };
 
-  writeBoilerParams(id, value) {
-    model.saveBoilerParams('check_interval', 7);
-  }
+  // writeBoilerParams(id, value) {
+  //   model.saveBoilerParams('check_interval', 7);
+  // }
 }
 
 const app = new App();

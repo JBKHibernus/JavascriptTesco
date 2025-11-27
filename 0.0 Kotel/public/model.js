@@ -6,6 +6,11 @@ class Model {
     openInterval: 2,
   };
 
+  keys = {
+    openInterval: 'open_interval',
+    checkInterval: 'check_interval',
+  };
+
   //lastFeed;
 
   getTimeDifference(datetimeStr) {
@@ -101,15 +106,8 @@ class Model {
     });
   };
 
-  updateBoilerParamsState(checkIntervalValue, openIntervalValue) {
-    this.state.checkInterval = +checkIntervalValue.textContent;
-    this.state.openInterval = +openIntervalValue.textContent;
-
-    console.log(this.state);
-  }
-
   //write actual date and amount of bags to DB
-  saveBoilerParams = async (id, value) => {
+  _saveBoilerParams = async (id, value) => {
     const res = await fetch('/params/write', {
       method: 'POST',
       headers: {
@@ -120,6 +118,21 @@ class Model {
 
     if (!res.ok) throw new Error('Error during writting.');
   };
+
+  // updateBoilerParamsState(checkIntervalValue, openIntervalValue) {
+  //   this.state.checkInterval = checkIntervalValue;
+  //   this.state.openInterval = openIntervalValue;
+
+  //   console.log(this.state);
+
+  //   this._saveBoilerParams('check_interval', this.state.checkInterval);
+  //   this._saveBoilerParams('open_interval', this.state.openInterval);
+  // }
+
+  setBoilerParam(key, value) {
+    this.state[key] = value;
+    this._saveBoilerParams(this.keys[key], value);
+  }
 }
 
 export default new Model();

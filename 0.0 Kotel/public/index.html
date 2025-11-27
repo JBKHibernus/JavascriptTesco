@@ -1,55 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Boiler</title>
     <link rel="stylesheet" href="./style.css" />
-</head>
-<body>
+  </head>
+  <body>
     <h1>Boiler management</h1>
     <div class="container">
-        <div class="logs">
-            <h2>Logs</h2>
-            <ul>
-                
-            </ul>
-        </div>
-        <div class="indicators">
-            <div class="countdown">
-                <p class="refilling-container" >Next refill in <span id="countdown-value">2 day 3 hours</span> </p> 
-                <div class="feeding-amount">
-                    <p>Amount: <span class="editable-amount">5</span> bags</p> 
-                    <div class="arrow-buttons">
-                        <button class="btn-up">▲</button>
-                        <button class="btn-down">▼</button>
-                    </div>
-                </div>
-                <button id="btn-renew">Renew</button>
+      <div class="logs">
+        <h2>Logs</h2>
+        <ul></ul>
+      </div>
+      <div class="indicators">
+        <div class="countdown">
+          <p class="refilling-container">
+            Next refill in <span id="countdown-value">2 day 3 hours</span>
+          </p>
+          <div class="feeding-amount">
+            <p>Amount: <span class="editable-amount">5</span> bags</p>
+            <div class="arrow-buttons">
+              <button class="btn-up">▲</button>
+              <button class="btn-down">▼</button>
             </div>
-            <div class="settings">
-                <div class="item"><p>Boiler status: <span>Running</span></p></div>
-                <div class="item"><p>Boiler temperature: <span>63</span> °C</p></div>
-                <div  id="check-interval" class="item">
-                    <p>Check interval: <span class="editable-amount" >5</span> min</p> 
-                    <div class="arrow-buttons">
-                        <button class="btn-up">▲</button>
-                        <button class="btn-down">▼</button>
-                    </div>
-                </div>
-                <div id="open-interval" class="item">
-                    <p>Open interval: <span class="editable-amount">2</span> min</p>
-                    <div class="arrow-buttons">
-                        <button class="btn-up">▲</button>
-                        <button class="btn-down">▼</button>
-                    </div>
-                </div>
-                <div id="avg-amount" class="item">
-                    <p>Average daily consumption: <span>5</span> bags</p>
-                </div>
-            </div>
+          </div>
+          <button id="btn-renew">Renew</button>
         </div>
+        <div class="settings">
+          <div class="item">
+            <p>Boiler status: <span>Running</span></p>
+          </div>
+          <div class="item">
+            <p>Boiler temperature: <span>63</span> °C</p>
+          </div>
+          <div id="check-interval" class="item">
+            <p>Check interval: <span class="editable-amount">5</span> min</p>
+            <div class="arrow-buttons">
+              <button class="btn-up">▲</button>
+              <button class="btn-down">▼</button>
+            </div>
+          </div>
+          <div id="open-interval" class="item">
+            <p>Open interval: <span class="editable-amount">2</span> min</p>
+            <div class="arrow-buttons">
+              <button class="btn-up">▲</button>
+              <button class="btn-down">▼</button>
+            </div>
+          </div>
+          <div id="avg-amount" class="item">
+            <p>Average daily consumption: <span>5</span> bags</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="./index_oop.js" charset="utf-8"></script>
-</body>
+    <script type="module" src="./controller.js" charset="utf-8"></script>
+  </body>
 </html>

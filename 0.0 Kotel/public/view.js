@@ -1,18 +1,19 @@
 class ArrowActions {
   target;
-  buttonUp;
-  buttonDown;
+  checkIntervalButtons;
+  openIntervalButtons;
+  updatedValue;
 
-  constructor(buttonUp, buttonDown) {
-    // buttonUp.forEach(pressedButton => {
+  constructor(checkIntervalButtons, openIntervalButtons) {
+    // checkIntervalButtons.forEach(pressedButton => {
     //   this.pressed(pressedButton);
     // });
 
-    // buttonDown.forEach(pressedButton => {
+    // openIntervalButtons.forEach(pressedButton => {
     //   this.pressed(pressedButton);
     // });
-    this.buttonUp = buttonUp;
-    this.buttonDown = buttonDown;
+    this.checkIntervalButtons = checkIntervalButtons;
+    this.openIntervalButtons = openIntervalButtons;
   }
 
   getUpdatedValue(currentValue, changeBy) {
@@ -32,7 +33,8 @@ class ArrowActions {
     const isLower = pressedButton.classList.contains('btn-down');
     const changeBy = isLower ? -1 : +1;
 
-    valueElement.innerHTML = this.getUpdatedValue(currentValue, changeBy);
+    this.updatedValue = this.getUpdatedValue(currentValue, changeBy);
+    valueElement.innerHTML = this.updatedValue;
   }
 
   animateButton(pressedButton) {
@@ -43,26 +45,27 @@ class ArrowActions {
     }, 100);
   }
 
-  pressedUp(handler) {
-    this.buttonUp.forEach(pressedButton => {
-      pressedButton.addEventListener('click', event => {
-        this.target = event.currentTarget;
-        this.animateButton(this.target);
-        this.changeValue(this.target);
-        this.addHandlerUpdateParams();
-        handler();
-      });
-    });
-  }
+  setHandlers(handler) {
+    const buttons = [...this.checkIntervalButtons, ...this.openIntervalButtons];
 
-  pressedDown(handler) {
-    this.buttonDown.forEach(pressedButton => {
+    buttons.forEach(pressedButton => {
       pressedButton.addEventListener('click', event => {
         this.target = event.currentTarget;
         this.animateButton(this.target);
         this.changeValue(this.target);
-        this.addHandlerUpdateParams();
-        handler();
+
+        const parameterCategory = pressedButton.closest('.item').id;
+        const buttonOrientation = pressedButton.classList[0];
+        console.log(parameterCategory, buttonOrientation);
+
+        handler(
+          parameterCategory === 'check-interval'
+            ? 'checkInterval'
+            : 'openInterval',
+          this.updatedValue
+        );
+
+        //handler('checkInterval', +View.checkIntervalValue.textContent);
       });
     });
   }
@@ -73,15 +76,21 @@ class View {
   amountElement = document.querySelector('span.editable-amount');
   countdownValue = document.querySelector('#countdown-value');
   averageAmount = document.querySelector('#avg-amount > p > span');
-  _buttonsUp = document.querySelectorAll('.btn-up');
-  _buttonsDown = document.querySelectorAll('.btn-down');
+  //_buttonsUp = document.querySelectorAll('.btn-up');
+  //_buttonsDown = document.querySelectorAll('.btn-down');
+  _checkIntervalButtons = document.querySelectorAll('#check-interval button');
+  _openIntervalButtons = document.querySelectorAll('#open-interval button');
+
   _logsContainer = document.querySelector('.logs ul');
   checkIntervalValue = document.querySelector(
     '#check-interval .editable-amount'
   );
   openIntervalValue = document.querySelector('#open-interval .editable-amount');
 
-  arrowActions = new ArrowActions(this._buttonsUp, this._buttonsDown);
+  arrowActions = new ArrowActions(
+    this._checkIntervalButtons,
+    this._openIntervalButtons
+  );
 
   addRenewButtonHandler(handler) {
     this.btnRenew.addEventListener('click', handler);
