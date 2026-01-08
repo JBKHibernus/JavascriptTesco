@@ -1,0 +1,29 @@
+.countdown {
+  background-color: #948979;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 1rem;
+}
+
+.countdown p {
+  color: #153448;
+}
+
+#btn-renew {
+  background-color: #153448;
+  cursor: pointer;
+  font-size: 18px;
+  color: #dfd0b8;
+}
+
+.feeding-amount {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.refilling-container {
+  width: 530px;
+}
