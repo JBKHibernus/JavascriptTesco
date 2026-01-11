@@ -4,16 +4,16 @@ function Countdown() {
   return (
     <>
       <div className="countdown">
-        <p class="refilling-container">
+        <p className="refilling-container">
           Next refill in <span id="countdown-value">2 day 3 hours</span>
         </p>
-        <div class="feeding-amount">
+        <div className="feeding-amount">
           <p>
-            Amount: <span class="editable-amount">5</span> bags
+            Amount: <span className="editable-amount">5</span> bags
           </p>
-          <div class="arrow-buttons">
-            <button class="btn-up">▲</button>
-            <button class="btn-down">▼</button>
+          <div className="arrow-buttons">
+            <button className="btn-up">▲</button>
+            <button className="btn-down">▼</button>
           </div>
         </div>
         <button id="btn-renew">Renew</button>

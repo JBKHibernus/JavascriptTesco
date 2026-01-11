@@ -1,6 +1,6 @@
 import './Settings.css';
 
-function Settings({ checkInterval, onCheckIntervalChange }) {
+function Settings({ checkInterval, openInterval, onIntervalChange }) {
   return (
     <>
       <div className="settings">
@@ -14,43 +14,56 @@ function Settings({ checkInterval, onCheckIntervalChange }) {
             Boiler temperature: <span>63</span> °C
           </p>
         </div>
-        {/* <div id="check-interval" className="item">
-          <p>
-            Check interval: <input value="5" /> min
-          </p>
-          <div className="arrow-buttons">
-            <button className="btn-up">▲</button>
-            <button className="btn-down">▼</button>
-          </div>
-        </div> */}
         <div id="check-interval" className="item">
           <p>
             Check interval: <span>{checkInterval}</span> min
           </p>
           <div className="arrow-buttons">
             <button
+              className="btn-up"
               onClick={() =>
-                onCheckIntervalChange(Math.max(1, checkInterval - 1))
-              }
-            >
-              ▼
-            </button>
-            <button
-              onClick={() =>
-                onCheckIntervalChange(Math.min(9, checkInterval + 1))
+                onIntervalChange(
+                  'check_interval',
+                  Math.min(9, checkInterval + 1)
+                )
               }
             >
               ▲
+            </button>
+            <button
+              className="btn-down"
+              onClick={() =>
+                onIntervalChange(
+                  'check_interval',
+                  Math.max(1, checkInterval - 1)
+                )
+              }
+            >
+              ▼
             </button>
           </div>
         </div>
         <div id="open-interval" className="item">
           <p>
-            Open interval: <input value="5" /> min
+            Open interval: <span>{openInterval}</span> min
           </p>
           <div className="arrow-buttons">
-            <button className="btn-up">▲</button>
-            <button className="btn-down">▼</button>
+            <button
+              className="btn-up"
+              onClick={() =>
+                onIntervalChange('open_interval', Math.min(9, openInterval + 1))
+              }
+            >
+              ▲
+            </button>
+            <button
+              className="btn-down"
+              onClick={() =>
+                onIntervalChange('open_interval', Math.max(1, openInterval - 1))
+              }
+            >
+              ▼
+            </button>
           </div>
         </div>
         <div id="avg-amount" className="item">
